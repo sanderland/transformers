@@ -33,6 +33,7 @@ MODEL_MAPPING_NAMES = OrderedDict(
         ("convnext", "ConvNextModel"),
         ("van", "VanModel"),
         ("resnet", "ResNetModel"),
+        ("regnet", "RegNetModel"),
         ("yoso", "YosoModel"),
         ("swin", "SwinModel"),
         ("vilt", "ViltModel"),
@@ -298,6 +299,7 @@ MODEL_FOR_IMAGE_CLASSIFICATION_MAPPING_NAMES = OrderedDict(
         ("convnext", "ConvNextForImageClassification"),
         ("van", "VanForImageClassification"),
         ("resnet", "ResNetForImageClassification"),
+        ("regnet", "RegNetForImageClassification"),
         ("poolformer", "PoolFormerForImageClassification"),
     ]
 )
