@@ -243,6 +243,7 @@ _import_structure = {
     "models.reformer": ["REFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP", "ReformerConfig"],
     "models.rembert": ["REMBERT_PRETRAINED_CONFIG_ARCHIVE_MAP", "RemBertConfig"],
     "models.resnet": ["RESNET_PRETRAINED_CONFIG_ARCHIVE_MAP", "ResNetConfig"],
+    "models.resnetd": ["RESNETD_PRETRAINED_CONFIG_ARCHIVE_MAP", "ResNetDConfig"],
     "models.retribert": ["RETRIBERT_PRETRAINED_CONFIG_ARCHIVE_MAP", "RetriBertConfig", "RetriBertTokenizer"],
     "models.roberta": ["ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP", "RobertaConfig", "RobertaTokenizer"],
     "models.roformer": ["ROFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP", "RoFormerConfig", "RoFormerTokenizer"],
@@ -1352,6 +1353,14 @@ if is_torch_available():
             "ResNetForImageClassification",
             "ResNetModel",
             "ResNetPreTrainedModel",
+        ]
+    )
+    _import_structure["models.resnetd"].extend(
+        [
+            "RESNETD_PRETRAINED_MODEL_ARCHIVE_LIST",
+            "ResNetDForImageClassification",
+            "ResNetDModel",
+            "ResNetDPreTrainedModel",
         ]
     )
     _import_structure["models.retribert"].extend(
@@ -2584,6 +2593,7 @@ if TYPE_CHECKING:
     from .models.reformer import REFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP, ReformerConfig
     from .models.rembert import REMBERT_PRETRAINED_CONFIG_ARCHIVE_MAP, RemBertConfig
     from .models.resnet import RESNET_PRETRAINED_CONFIG_ARCHIVE_MAP, ResNetConfig
+    from .models.resnetd import RESNETD_PRETRAINED_CONFIG_ARCHIVE_MAP, ResNetDConfig
     from .models.retribert import RETRIBERT_PRETRAINED_CONFIG_ARCHIVE_MAP, RetriBertConfig, RetriBertTokenizer
     from .models.roberta import ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP, RobertaConfig, RobertaTokenizer
     from .models.roformer import ROFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP, RoFormerConfig, RoFormerTokenizer
@@ -3518,6 +3528,12 @@ if TYPE_CHECKING:
             ResNetForImageClassification,
             ResNetModel,
             ResNetPreTrainedModel,
+        )
+        from .models.resnetd import (
+            RESNETD_PRETRAINED_MODEL_ARCHIVE_LIST,
+            ResNetDForImageClassification,
+            ResNetDModel,
+            ResNetDPreTrainedModel,
         )
         from .models.retribert import RETRIBERT_PRETRAINED_MODEL_ARCHIVE_LIST, RetriBertModel, RetriBertPreTrainedModel
         from .models.roberta import (
