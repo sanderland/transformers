@@ -188,7 +188,7 @@ def run_hp_search_optuna(trainer, n_trials: int, direction: str, **kwargs) -> Be
         study = optuna.create_study(direction=direction, **kwargs)
         study.optimize(_objective, n_trials=n_trials, timeout=timeout, n_jobs=n_jobs)
         best_trial = study.best_trial
-        return BestRun(str(best_trial.number), best_trial.value, best_trial.params)
+        return BestRun(str(best_trial.number), best_trial.value, best_trial.params, study)
     else:
         for i in range(n_trials):
             trainer.objective = None
@@ -338,7 +338,7 @@ def run_hp_search_ray(trainer, n_trials: int, direction: str, **kwargs) -> BestR
         **kwargs,
     )
     best_trial = analysis.get_best_trial(metric="objective", mode=direction[:3], scope=trainer.args.ray_scope)
-    best_run = BestRun(best_trial.trial_id, best_trial.last_result["objective"], best_trial.config)
+    best_run = BestRun(best_trial.trial_id, best_trial.last_result["objective"], best_trial.config, analysis)
     if _tb_writer is not None:
         trainer.add_callback(_tb_writer)
     return best_run
@@ -381,7 +381,7 @@ def run_hp_search_sigopt(trainer, n_trials: int, direction: str, **kwargs) -> Be
                     run.log_metric("objective", trainer.objective)
 
             best = list(experiment.get_best_runs())[0]
-            best_run = BestRun(best.id, best.values["objective"].value, best.assignments)
+            best_run = BestRun(best.id, best.values["objective"].value, best.assignments, experiment)
         else:
             from sigopt import Connection
 
@@ -422,7 +422,7 @@ def run_hp_search_sigopt(trainer, n_trials: int, direction: str, **kwargs) -> Be
                 experiment = conn.experiments(experiment.id).fetch()
 
             best = list(conn.experiments(experiment.id).best_assignments().fetch().iterate_pages())[0]
-            best_run = BestRun(best.id, best.value, best.assignments)
+            best_run = BestRun(best.id, best.value, best.assignments, conn)
         return best_run
     else:
         for i in range(n_trials):
@@ -509,7 +509,7 @@ def run_hp_search_wandb(trainer, n_trials: int, direction: str, **kwargs) -> Bes
     logger.info(f"wandb sweep id - {sweep_id}")
     wandb.agent(sweep_id, function=_objective, count=n_trials)
 
-    return BestRun(best_trial["run_id"], best_trial["objective"], best_trial["hyperparameters"])
+    return BestRun(best_trial["run_id"], best_trial["objective"], best_trial["hyperparameters"], wandb)
 
 
 def get_available_reporting_integrations():

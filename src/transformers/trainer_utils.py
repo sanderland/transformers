@@ -202,11 +202,14 @@ class BestRun(NamedTuple):
             The objective that was obtained for this run.
         hyperparameters (`Dict[str, Any]`):
             The hyperparameters picked to get this run.
+        backend (`Any`):
+            The object used in optimization.
     """
 
     run_id: str
     objective: float
     hyperparameters: Dict[str, Any]
+    backend: Any = None
 
 
 def default_compute_objective(metrics: Dict[str, float]) -> float:
